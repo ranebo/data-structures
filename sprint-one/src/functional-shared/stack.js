@@ -1,8 +1,8 @@
 var Stack = function() {
   var newStack = {};
   newStack.storage = {};
-  newStack.items = 0;
-  extend(newStack, Stack.stackMethods);
+  newStack.item = 0;
+  extend(newStack, stackMethods);
   return newStack;
 };
 
@@ -13,61 +13,25 @@ var extend = function(to, from) {
   }
 };
 
-Stack.stackMethods = {};
+var stackMethods = {};
 
-Stack.stackMethods.push = function(){
-    this.items = value;
+stackMethods.push = function(value) {
+  this.storage[this.item] = value;
+  this.item++;
 };
 
-Stack.stackMethods.pop = function(){
+stackMethods.pop = function() {
+  if (this.item !== 0) {
+    this.item--;
+  }
+  var popped = this.storage[this.item];
+  delete this.storage[this.item];
+  return popped;
+};
+
+stackMethods.size = function() {
+  return this.item;
 
 };
 
-Stack.stackMethods.size = function(){
-  return 0;
 
-};
-
-
-
-
-
-
-
-// var giraffeMaker = function(name, height) {
-//   var newGiraffe = {};
-//   newGiraffe.name = name;
-//   newGiraffe.height = height;
-//   newGiraffe.hunger = 10;
-//   extend(newGiraffe, giraffeMaker.giraffeMethods);
-
-//   return newGiraffe;
-// };
-
-// var extend = function(to, from) {
-//   for (var key in from) {
-//     to[key] = from[key];
-//   }
-// };
-
-// giraffeMaker.giraffeMethods = {};
-
-
-// giraffeMaker.giraffeMethods.isTallEnough = function(treeHeight) {
-//     return this.height > treeHeight;
-//   };
-
-// giraffeMaker.giraffeMethods.isHungry = function() {
-//   return this.hunger > 0;
-// };
-
-// giraffeMaker.giraffeMethods.say = function(option) {
-//   var sentences = {
-//     'greet': 'Hello, my name is ' + this.name + ', it is nice to meet you.',
-//     'notHungry': this.name + ' is not hungry.',
-//     'notTallEnough': this.name + ' is too short to reach the trees.',
-//     'ate': 'That was delicious!'
-//   };
-
-//   return console.log(sentences[option]);
-// };
