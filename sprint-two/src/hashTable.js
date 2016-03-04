@@ -42,6 +42,10 @@ HashTable.prototype.remove = function(k) {
 
 /*
  * Complexity: What is the time complexity of the above functions?
+Hashtable - CONSTANT
+HashTable.prototype.insert - LINEAR
+HashTable.prototype.retrieve - LINEAR
+HashTable.prototype.remove - LINEAR
  */
 
 
