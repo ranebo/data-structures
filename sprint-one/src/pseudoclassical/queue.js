@@ -1,30 +1,28 @@
 var Queue = function() {
-  this.storage = {};
-  this.item = 0;
+  this._storage = {};
+  this._item = 0;
 };
 
 Queue.prototype.enqueue = function(value) {
-  this.storage[this.item] = value;
-  this.item++;
+  this._storage[this._item] = value;
+  this._item++;
 };
 
 Queue.prototype.dequeue = function() {
-  if (this.item > 0) {
-    this.item--;
-  }
-  var popped = this.storage[0];
-  delete this.storage[0];
+  this._item && this._item--;
+  var popped = this._storage[0];
+  delete this._storage[0];
 
-  for (var key in this.storage) {
+  for (var key in this._storage) {
     var count = 0;
-    this.storage[count] = this.storage[key];
+    this._storage[count] = this._storage[key];
     count++;
   }
   return popped;
 };
 
 Queue.prototype.size = function() {
-  return this.item;
+  return this._item;
 };
 
 var newQueue = new Queue();

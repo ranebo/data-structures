@@ -1,31 +1,31 @@
 var Queue = function() {
   var newQueue = Object.create(queueMethods);
-  newQueue.storage = {};
-  newQueue.item = 0;
+  newQueue._storage = {};
+  newQueue._item = 0;
   return newQueue;
 };
 
 var queueMethods = {};
 
 queueMethods.enqueue = function(value) {
-  this.storage[this.item] = value;
-  this.item++;
+  this._storage[this._item] = value;
+  this._item++;
 };
 
 queueMethods.dequeue = function() {
-  if (this.item !== 0) {
-    this.item--;
-  }
-  var popped = this.storage[0];
-  delete this.storage[0];
-  for (var key in this.storage) {
+  this._item && this._item--;
+
+  var popped = this._storage[0];
+  delete this._storage[0];
+
+  for (var key in this._storage) {
     var counter = 0;
-    this.storage[counter] = this.storage[key];
+    this._storage[counter] = this._storage[key];
     counter++;
   }
   return popped;
 };
 
 queueMethods.size = function() {
-  return this.item;
+  return this._item;
 }; 

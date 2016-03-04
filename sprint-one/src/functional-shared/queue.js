@@ -1,7 +1,7 @@
 var Queue = function() {
   var newQueue = {};
-  newQueue.storage = {};
-  newQueue.item = 0;
+  newQueue._storage = {};
+  newQueue._item = 0;
   extend(newQueue, queueMethods);
   return newQueue;
 };
@@ -15,27 +15,25 @@ var extend = function (to, from) {
 var queueMethods = {};
 
 queueMethods.enqueue = function(value) {
-  this.storage[this.item] = value;
-  this.item++;
+  this._storage[this._item] = value;
+  this._item++;
 };
 
 queueMethods.dequeue = function() {
-  if (this.item > 0) {
-    this.item--;  
-  }
-  var popped = this.storage[0];
-  delete this.storage[0];
+  this._item && this._item--; 
+  var popped = this._storage[0];
+  delete this._storage[0];
   
-  for (var key in this.storage) {
+  for (var key in this._storage) {
     count = 0;
-    this.storage[count] = this.storage[key];
+    this._storage[count] = this._storage[key];
     count++;
   }
   return popped;
 };
 
 queueMethods.size = function() {
-  return this.item;
+  return this._item;
 };
 
 

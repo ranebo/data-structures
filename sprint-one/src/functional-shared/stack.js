@@ -1,11 +1,10 @@
 var Stack = function() {
   var newStack = {};
-  newStack.storage = {};
-  newStack.item = 0;
+  newStack._storage = {};
+  newStack._item = 0;
   extend(newStack, stackMethods);
   return newStack;
 };
-
 
 var extend = function(to, from) {
   for (var key in from) {
@@ -16,22 +15,20 @@ var extend = function(to, from) {
 var stackMethods = {};
 
 stackMethods.push = function(value) {
-  this.storage[this.item] = value;
-  this.item++;
+  this._storage[this._item] = value;
+  this._item++;
 };
 
 stackMethods.pop = function() {
-  if (this.item !== 0) {
-    this.item--;
+  if (this._item !== 0) {
+    this._item--;
   }
-  var popped = this.storage[this.item];
-  delete this.storage[this.item];
+  var popped = this._storage[this._item];
+  delete this._storage[this._item];
   return popped;
 };
 
 stackMethods.size = function() {
-  return this.item;
+  return this._item;
 
 };
-
-
