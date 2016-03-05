@@ -49,26 +49,29 @@ HashTable.prototype.remove = function(k) {
   }
 };  
 
-// Hashtable.prototype.resize = function(newLimit) {
-
-  
-//   var newStorage = LimitedArray(newLimit);
-//   for (var i = 0; i < this._storage.length; i++) {
-//     for (var j = 0; j < this._storage[i].length; j++) {
-//       var index = getIndexBelowMaxForKey(this._storage[i][j][0], newLimit);
-//         if (newStorage) {
-
-//         }
-//       newStorage.insert(this._storage[i][j][0], this._storage[i][j][1]);
-
-//     }
-//   }
-//   //loop through buckets
-//     //loop through tuples
-//       //each tuple call this.insert(tubple[0], tuple[1])
-
-//   this._storage = newStorage;
-// };
+Hashtable.prototype.resize = function(newLimit) {  
+  var newStorage = LimitedArray(newLimit);
+  for (var i = 0; i < this._storage.length; i++) {
+    for (var j = 0; j < this._storage[i].length; j++) {
+      var k = this._storage[i][j][0];
+      var v = this._storage[i][j][1];
+      var index = getIndexBelowMaxForKey(k, newLimit);
+      var newTuple = [k, v];  
+      if (newStorage[index]) {
+        for (var i = 0; i < newStorage[index].length; i++) {
+          if (newStorage[index][i][0] === k) {
+            newStorage[index][i][1] = v;
+          } else {
+            newStorage[index].push(newTuple);
+          }
+        }
+      } else {
+        newStorage[index] = [newTuple];
+      }
+    }
+  }
+  this._storage = newStorage;
+};
 
 /*
  * Complexity: What is the time complexity of the above functions?
