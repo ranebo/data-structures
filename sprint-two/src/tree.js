@@ -1,8 +1,8 @@
 var Tree = function(value) {
   var newTree = {};
-  newTree.value = value;
-  newTree.children = null;
-  newTree.parent = null; 
+  newTree._value = value;
+  newTree._children = null;
+  newTree._parent = null; 
   extend(newTree, treeMethods);
   return newTree;
 };
@@ -15,24 +15,32 @@ var extend = function(to, from) {
 
 var treeMethods = {};
 
-treeMethods.removeFromParent = function() {
-
+treeMethods.removeFromParent = function(value, index) {
+  index = index || 0;
+  if (this._children[index]._value === value) {
+    this._children.splice(index, 1);
+  }
+  if (this._children) {
+    for (var i = 0; i < this._children.length; i++) {
+      return this._children[i].removeFromParent(value, i);
+    }
+  }
 };
 
 treeMethods.addChild = function(value) {
   var newChild = Tree(value);
-  newChild.parent = this.children;
-  this.children ? this.children.push(newChild) : this.children = [Tree(newChild)];
+  newChild._parent = this;
+  this._children ? this._children.push(newChild) : this._children = [newChild];
 };
 
 treeMethods.contains = function(target) {
 
-  if (this.value === target) {
+  if (this._value === target) {
     return true;
   }
-  if (this.children) {
-    for (var i = 0; i < this.children.length; i++) {
-      if (this.children[i].contains(target)) {
+  if (this._children) {
+    for (var i = 0; i < this._children.length; i++) {
+      if (this._children[i].contains(target)) {
         return true;
       }
     }
@@ -46,5 +54,6 @@ treeMethods.contains = function(target) {
  Tree - CONSTANT
  extend - LINEAR
  treeMethods.addChild - CONSTANT
- treemethods.contains - LINEAR
+ treeMethods.contains - LINEAR
+ treeMethods.removeFromParent - LINEAR
  */
