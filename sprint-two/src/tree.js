@@ -2,7 +2,7 @@ var Tree = function(value) {
   var newTree = {};
   newTree._value = value;
   newTree._children = null;
-  newTree._parent = null; 
+  newTree._parent = null;
   extend(newTree, treeMethods);
   return newTree;
 };
@@ -48,6 +48,15 @@ treeMethods.contains = function(target) {
   return false;
 };
 
+treeMethods.traverse = function(cb) {
+  var newValue = cb(this._value);
+  this._value = newValue || this._value;
+  if (this._children) {
+    for (var i = 0; i < this._children.length; i++) {
+      this._children[i].traverse(cb);
+    }
+  }
+};
 
 /*
  * Complexity: What is the time complexity of the above functions?
